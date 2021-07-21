@@ -1,0 +1,61 @@
+<div class="sidenav">
+   <div class="login-main-text">
+      <h2>Application<br> Login Page</h2>
+      <p>Login or register from here to access.</p>
+   </div>
+</div>
+<div class="main">
+   <div class="row">
+      <div class="col-md-6 col-sm-12">
+         <div class="login-form">
+            <div class="row">
+               <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+                  <div class="col-sm-12">
+                     <div class="form-group">
+                        <label>User Name</label>
+                        <input type="text" class="form-control" formControlName="email" placeholder="User Name">
+                     </div>
+                     <div class="form-group" *ngIf="(loginFormControl.email.touched)">
+                        <ul class="span-error">
+                           <li *ngIf="loginFormControl.email.errors?.required">
+                              {{ validateForm('required', 'email') }}
+                           </li>
+                           <li *ngIf="loginFormControl.email.errors?.pattern">
+                              {{ validateForm('email', 'email') }}
+                           </li>
+                        </ul>
+                     </div>
+                  </div>
+                  <div class="col-sm-12">
+                     <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" class="form-control" formControlName="password" placeholder="Password">
+                     </div>
+                     <div class="form-group" *ngIf="(loginFormControl.password.touched)">
+                        <ul class="span-error">
+                           <li *ngIf="loginFormControl.password.errors?.required">
+                              {{ validateForm('required', 'email') }}
+                           </li>
+                           <li *ngIf="loginFormControl.password.errors?.minlength">
+                              {{
+                                 validateForm('minLength', 'password', {
+                                 'minLength': loginFormControl.password.errors?.minlength.requiredLength,
+                                 'actualLength': loginFormControl.password.errors?.minlength.actualLength
+                                 })
+                                 }}
+                           </li>
+                        </ul>
+                     </div>
+                  </div>
+                  <div class="col-sm-12">
+                     <div class="form-group">
+                        <button type="submit" [disabled]="!loginForm.valid" class="btn btn-black"
+                           style="margin: 0px 4px 0px 0px;">Login</button>
+                     </div>
+                  </div>
+               </form>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>

@@ -1,15 +1,13 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "cli": {
+    "analytics": "fb6cfc3f-6b37-495f-acf1-1b8d61d9bf8a"
+  },
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
     "polls": {
       "projectType": "application",
-      "schematics": {
-        "@schematics/angular:application": {
-          "strict": true
-        }
-      },
       "root": "",
       "sourceRoot": "src",
       "prefix": "app",

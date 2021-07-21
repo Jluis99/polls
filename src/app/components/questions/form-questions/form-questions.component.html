@@ -1,0 +1,105 @@
+<div class="row">
+   <div class="col-sm-12">
+      <div class="card">
+         <div class="card-header">
+            <h4>
+               <span *ngIf="! currentQuestion.id">Create </span> <span *ngIf="currentQuestion.id">Edit</span> Question
+            </h4>
+         </div>
+         <form [formGroup]="formQuestion">
+            <div class="card-body">
+               <div class="row">
+                  <div class="col-sm-12">
+                     <div class="form-group">
+                        <div class="form-floating mb-3">
+                           <input type="string" class="form-control" id="floatInputDescription" name="description"
+                              formControlName="description">
+                           <label for="floatInputDescription">Description</label>
+                        </div>
+                     </div>
+                     <div class="form-group" *ngIf="(questionFormControl.description.touched || submitted)">
+                        <ul class="span-error">
+                           <li *ngIf="questionFormControl.description.errors?.required">
+                              {{ validateForm('required', 'description') }}
+                           </li>
+                           <li *ngIf="questionFormControl.description.errors?.maxlength">
+                              {{
+                              validateForm('maxLength', 'description', {
+                              'maxLength': questionFormControl.description.errors?.maxlength.requiredLength,
+                              'actualLength': questionFormControl.description.errors?.maxlength.actualLength
+                              })
+                              }}
+                           </li>
+                        </ul>
+                     </div>
+                  </div>
+                  <div formArrayName="answers">
+                     <div class="row">
+                        <div class="col-sm-10">
+                           <h5> List Answers</h5>
+                        </div>
+                        <div class="col-sm-2 text-end">
+                           <button style="margin-top: 26px;" (click)="addAnswer()" class="btn btn-sm btn-primary"
+                              *ngIf="answers.controls.length == 0"> <i class="bi bi-plus"></i></button>
+                        </div>
+                        <div class="col-lg-12">
+                           <div class="row" *ngFor="let answer of answers.controls; let i = index; let last = last">
+                              <div class="col-lg-12" [formGroupName]="i">
+                                 <div class="row">
+                                    <div class="col-sm-11 pb-1">
+                                       <label> Answer No. {{ i + 1 }}</label>
+                                       <input type="text" class="form-control" formControlName="description"
+                                          placeholder="Answer: {{ i + 1 }}">
+                                    </div>
+                                    <div class="col-sm-1 pb-1">
+                                       <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+                                          <button (click)="removeAnswer(i)" style="margin-top: 26px;"
+                                             class="btn btn-sm btn-danger"> <i class="bi bi-dash"></i></button>
+                                          <button style="margin-top: 26px;" (click)="addAnswer()"
+                                             class="btn btn-sm btn-primary" *ngIf="last"> <i
+                                                class="bi bi-plus"></i></button>
+                                       </div>
+                                    </div>
+                                    <div class="col-lg-12">
+                                       <div class="form-check">
+                                          <input class="form-check-input" type="checkbox" formControlName="isCorrect" name="isCorrect"
+                                             id="exampleRadios{{ i }}">
+                                          <label class="form-check-label" for="exampleRadios{{ i }}">
+                                             Is Correct?
+                                          </label>
+                                       </div>
+                                    </div>
+                                    <div class="col-sm-12 form-group"
+                                       *ngIf="((answer.controls.description.touched && answer.invalid) || submitted)">
+                                       <ul class="span-error">
+                                          <li *ngIf="answer.controls.description.errors?.required">
+                                             {{ validateForm('required', 'answer no.' + (i + 1)) }}
+                                          </li>
+                                          <li *ngIf="answer.controls.description.errors?.maxlength">
+                                             {{
+                                             validateForm('maxLength', 'answer no.' + (i + 1), {
+                                             'maxLength': answer.controls.description.errors?.maxlength.requiredLength,
+                                             'actualLength': answer.controls.description.errors?.maxlength.actualLength
+                                             })
+                                             }}
+                                          </li>
+                                       </ul>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="card-footer text-end">
+               <button class="btn btn-sm btn-success" type="button" [disabled]="!formQuestion.valid"
+                  (click)="saveQuestion()"> Guardar</button>
+               &nbsp;
+               <button class="btn btn-sm btn-default" type="button" (click)="cancelForm()"> Cancel</button>
+            </div>
+         </form>
+      </div>
+   </div>
+</div>

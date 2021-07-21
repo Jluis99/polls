@@ -1,0 +1,73 @@
+<div class="row">
+   <div class="col-sm-12">
+      <div class="card">
+         <div class="card-header">
+            <h4>Poll</h4>
+         </div>
+         <form [formGroup]="pollForm">
+            <div class="card-body">
+               <div class="row">
+                  <div class="col-sm-12">
+                     <div class="form-group">
+                        <div class="form-floating mb-3">
+                           <input type="string" class="form-control"
+                              id="floatInputName" name="name" formControlName="name">
+                           <label for="floatInputName">Name</label>
+                        </div>
+                     </div>
+                     <div class="form-group" *ngIf="(pollFormControl.name.touched || submitted)">
+                        <ul class="span-error">
+                           <li *ngIf="pollFormControl.name.errors?.required">
+                              {{ validateForm('required', 'name') }}
+                           </li>
+                           <li *ngIf="pollFormControl.name.errors?.maxlength">
+                              {{
+                              validateForm('maxLength', 'name', {
+                              'maxLength': pollFormControl.name.errors?.maxlength.requiredLength,
+                              'actualLength': pollFormControl.name.errors?.maxlength.actualLength
+                              })
+                              }}
+                           </li>
+                        </ul>
+                     </div>
+                  </div>
+                  <div class="col-sm-12">
+                     <div class="form-group">
+                        <h5> Active</h5>
+                        <div class="form-check">
+                           <input class="form-check-input" type="radio" id="flexRadioDefault1"
+                              name="status" (click)="changeStatusPoll(0)" [checked]="poll.status === 0 ? true : false">
+                           <label class="form-check-label" for="flexRadioDefault1">
+                              Yes
+                           </label>
+                        </div>
+                        <div class="form-check">
+                           <input class="form-check-input" type="radio" id="flexRadioDefault2"
+                              name="status" (click)="changeStatusPoll(1)" [checked]="poll.status === 0 ? false : true">
+                           <label class="form-check-label" for="flexRadioDefault2">
+                              No
+                           </label>
+                        </div>
+                     </div>
+                     <div class="form-group" *ngIf="(pollFormControl.status.touched || submitted)">
+                        <ul class="span-error">
+                           <li *ngIf="pollFormControl.status.errors?.required">
+                              {{ validateForm('required', 'status') }}
+                           </li>
+                        </ul>
+                     </div>
+                  </div>
+               </div>
+               <hr>
+               <app-list-question [poll]="poll"></app-list-question>
+            </div>
+            <div class="card-footer">
+               <button class="btn btn-sm btn-success" type="button" [disabled]="isInvalidForm" (click)="onSubmit()">
+                  Guardar</button>
+               &nbsp;
+               <button class="btn btn-sm btn-default" type="button" (click)="cancelForm()"> Cancel</button>
+            </div>
+         </form>
+      </div>
+   </div>
+</div>

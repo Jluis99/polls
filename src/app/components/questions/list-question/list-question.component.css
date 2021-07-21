@@ -1,0 +1,13 @@
+.bg-blue {
+   background-color: #0f68eb;
+   color: white;
+}
+
+.bg-blue:hover {
+   background-color: #0856ca;
+   border-color: #0f68eb;
+}
+
+.color-white {
+   color: white;
+}

@@ -1,0 +1,52 @@
+<div class="row" *ngIf="! showForm">
+   <div class="col-sm-12">
+      <div class="row">
+         <div class="col-lg-10">
+            <h4> List Questions</h4>
+         </div>
+         <div class="col-lg-2 text-end">
+            <button class="btn btn-sm btn-primary" (click)="addQuestion()"> Add Question</button>
+         </div>
+      </div>
+   </div>
+   <div class="col-sm-12">
+      <div class="table-responsive" *ngIf="poll.questions.length > 0">
+         <table class="table">
+            <thead>
+               <tr>
+                  <th>Description</th>
+                  <th class="text-center">Answers</th>
+                  <th class="text-center">Status</th>
+                  <th class="text-center">...</th>
+               </tr>
+            </thead>
+            <tbody>
+               <tr *ngFor="let question of poll.questions">
+                  <td> {{ question.description }} </td>
+                  <td class="text-center"> {{ question.answers.length }} </td>
+                  <td class="text-center"> {{ resolveQuestionStatus(question.active) }} </td>
+                  <td class="text-center">
+                     <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+                        <button class="btn btn-sm btn-primary" title="Edit" (click)="editQuestion(question)"> <i class="bi bi-pencil"></i></button>
+                        <button *ngIf="question.active === 0" (click)="changeStatusQuestion(question, 1)" class="btn btn-sm btn-warning color-white" title="Disable">
+                           <i class="bi bi-bookmark-dash"></i>
+                        </button>
+                        <button *ngIf="question.active === 1" (click)="changeStatusQuestion(question, 0)" class="btn btn-sm btn-info color-white" title="Enable">
+                           <i class="bi bi-bookmark-check"></i>
+                        </button>
+                        <button class="btn btn-sm btn-danger" title="Delete"> <i class="bi bi-trash"></i></button>
+                     </div>
+                  </td>
+               </tr>
+            </tbody>
+         </table>
+      </div>
+   </div>
+   <div class="col-sm-12" *ngIf="poll.questions.length === 0">
+      <div class="alert alert-primary" role="alert">
+         <i class="bi bi-info-circle"></i> Questions not found.
+      </div>
+   </div>
+</div>
+
+<app-form-questions *ngIf="showForm" [currentQuestion]="actualQuestion" (statusForm)="resolveUserForm($event)"></app-form-questions>

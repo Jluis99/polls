@@ -1,0 +1,58 @@
+<div *ngIf="!showForm" class="row">
+   <div class="col-lg-12 text-end">
+      <button class="btn btn-sm btn-success" (click)="addNewPoll()"> New Poll</button>
+   </div>
+   <div *ngFor="let poll of polls" class="col-sm-12 col-lg-4">
+      <div class="card">
+         <div class="card-header">
+            <h4> {{ poll.name }} </h4>
+         </div>
+         <div class="card-body">
+            <div class="row">
+               <div class="col-lg-12">
+                  <ul>
+                     <li>
+                        <span class="card-title">
+                           Date:
+                        </span>
+                        <span class="card-subtitle">
+                           {{ poll.createdAt | date}}
+                        </span>
+                     </li>
+                     <li>
+                        <span class="card-title">
+                           Questions:
+                        </span>
+                        <span class="card-subtitle">
+                           {{ poll.questions.length }}
+                        </span>
+                     </li>
+                     <li>
+                        <span class="card-title">
+                           Status:
+                        </span>
+                        <span class="card-subtitle">
+                           {{ resolvePollStatus(poll.status) }}
+                        </span>
+                     </li>
+                  </ul>
+               </div>
+               <div class="col-lg-12 text-end">
+                  <div class="btn-group" role="group">
+                     <button *ngIf="poll.status === 0" (click)="changeStatusPoll(poll, 1)" class="btn btn-sm btn-warning color-white" title="Disable">
+                        <i class="bi bi-bookmark-dash"></i>
+                     </button>
+                     <button *ngIf="poll.status === 1" (click)="changeStatusPoll(poll, 0)" class="btn btn-sm btn-info color-white" title="Enable">
+                        <i class="bi bi-bookmark-check"></i>
+                     </button>
+                     <button class="btn btn-sm bg-blue" title="Edit" (click)="editPoll(poll)"><i class="bi bi-pencil"></i></button>
+                     <button class="btn btn-sm btn-danger" title="Delete"><i class="bi bi-trash"></i></button>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+
+<app-form-poll *ngIf="showForm" [poll]="poll" (resolveForm)="resolveForm($event)"></app-form-poll>
